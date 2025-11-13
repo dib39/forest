@@ -5,6 +5,7 @@ class InteractiveStory {
     this.isAnimating = false;
     this.scrollThreshold = 50;
     this.lastScrollTime = 0;
+    this.downloadTriggered = false; // Флаг для отслеживания скачивания
     
     this.init();
   }
@@ -79,6 +80,13 @@ class InteractiveStory {
         }
       }
     }, { passive: true });
+
+    // Обработчик для кнопки ручного скачивания
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.id === 'download-trigger') {
+        this.triggerDownload();
+      }
+    });
   }
 
   nextScreen() {
@@ -110,7 +118,12 @@ class InteractiveStory {
       // Анимация фона
       const currentBg = currentScreen.querySelector('.background');
       if (currentBg) {
-        currentBg.classList.add('zooming');
+        // Для перехода на светлый экран используем другую анимацию
+        if (nextIndex === 4) { // 5-й экран (индекс 4)
+          currentBg.classList.add('light-transition');
+        } else {
+          currentBg.classList.add('zooming');
+        }
       }
       
       // 3. Показываем следующий экран (но он пока не виден)
@@ -121,20 +134,27 @@ class InteractiveStory {
         // Скрываем текущий экран
         currentScreen.classList.remove('active', 'exiting');
         if (currentBg) {
-          currentBg.classList.remove('zooming');
+          currentBg.classList.remove('zooming', 'light-transition');
         }
         
         // Показываем контент следующего экрана
         const nextContent = nextScreen.querySelector('.content');
         setTimeout(() => {
           nextContent.classList.add('visible');
+          
+          // Если перешли на 5-й экран - запускаем скачивание
+          if (nextIndex === 4 && !this.downloadTriggered) {
+            setTimeout(() => {
+              this.triggerDownload();
+            }, 1000); // Задержка перед скачиванием
+          }
         }, 300);
         
         this.currentScreen = nextIndex;
         this.isAnimating = false;
         this.updateScrollIndicator();
-      }, 1500);
-    }, 800); // Задержка перед раздвиганием веток
+      }, nextIndex === 4 ? 3000 : 1500); // Для светлого перехода дольше
+    }, 800);
   }
 
   showScreen(index) {
@@ -168,6 +188,42 @@ class InteractiveStory {
       indicator.classList.remove('hidden');
     }
   }
+
+  // Метод для скачивания файла
+  triggerDownload() {
+    if (this.downloadTriggered) return;
+    
+    this.downloadTriggered = true;
+    
+    // Замените 'your-file.docx' на путь к вашему Word файлу
+    const fileUrl = 'file.docx';
+    const fileName = 'document.docx'; // Имя файла при скачивании
+    
+    // Создаем временную ссылку для скачивания
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    
+    // Запускаем скачивание
+    link.click();
+    document.body.removeChild(link);
+    
+    // Показываем сообщение об успешном скачивании
+    this.showDownloadSuccess();
+  }
+
+  // Показ сообщения об успешном скачивании
+  showDownloadSuccess() {
+  const downloadSection = document.querySelector('.download-section p');
+  if (downloadSection) {
+    downloadSection.textContent = 'Файл успешно скачан!';
+    downloadSection.style.color = '#4caf50'; // Спокойный зеленый
+    downloadSection.style.fontWeight = '400';
+  }
+}
 }
 
 // Запуск при загрузке страницы

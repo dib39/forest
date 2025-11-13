@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Путешествие через кусты</title>
+  <title>Поиск</title>
   <link rel="stylesheet" href="final.css">
 </head>
+
 <body>
   <div class="fade-overlay start"></div>
-  
+
   <main id="scroller">
     <!-- Экран 1 -->
     <section class="screen active" data-screen="1">
       <div class="background bg-1"></div>
       <div class="content">
-        <div class="image-placeholder photo-1"></div>
+        <div class="images-container">
+          <div class="image-placeholder photo-1 photo-left"></div>
+          <div class="image-placeholder photo-1 photo-right"></div>
+        </div>
         <div class="text-content">
           <!--<h1>Начало пути</h1>
           <p>Здесь будет ваше первое поздравление или воспоминание</p>-->
@@ -31,7 +36,11 @@
     <section class="screen" data-screen="2">
       <div class="background bg-2"></div>
       <div class="content">
-        <div class="image-placeholder photo-2"></div>
+        <div class="images-container">
+          <div class="image-placeholder photo-2 photo-left"></div>
+          <div class="image-placeholder photo-2 photo-right"></div>
+          <div class="image-placeholder photo-2 photo-bot"></div>
+        </div>
         <div class="text-content">
           <!--<h1>Продолжение истории</h1>
           <p>Второе поздравление или важный момент</p> -->
@@ -48,7 +57,11 @@
     <section class="screen" data-screen="3">
       <div class="background bg-3"></div>
       <div class="content">
-        <div class="image-placeholder photo-3"></div>
+        <div class="images-container">
+          <div class="image-placeholder photo-3 photo-left"></div>
+          <div class="image-placeholder photo-3 photo-right"></div>
+          <div class="image-placeholder photo-3 photo-bot"></div>
+        </div>
         <div class="text-content">
           <!--<h1>Кульминация</h1>
           <p>Самое важное поздравление</p>-->
@@ -65,7 +78,12 @@
     <section class="screen" data-screen="4">
       <div class="background bg-4"></div>
       <div class="content">
-        <div class="image-placeholder photo-4"></div>
+        <div class="images-container">
+          <div class="image-placeholder photo-4 photo-left"></div>
+          <div class="image-placeholder photo-4 photo-left2"></div>
+          <div class="image-placeholder photo-4 photo-right"></div>
+          <div class="image-placeholder photo-4 photo-right2"></div>
+        </div>
         <div class="text-content">
           <!--<h1>Завершение</h1>
           <p>Финальные слова и пожелания</p>-->
@@ -78,6 +96,20 @@
         <div class="branch branch-right-4"></div>
       </div>
     </section>
+
+    <!-- Экран 5 - Финальный -->
+    <section class="screen" data-screen="5">
+      <div class="background bg-5"></div>
+      <div class="content">
+        <div class="final-message">
+          <p>Сделав последний шаг, девушка, наконец, выбралась наружу...</p>
+          <div class="download-section">
+            <p>Ваш файл начнет скачиваться автоматически...</p>
+            <div class="download-btn" id="download-trigger">Скачать вручную</div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div class="scroll-indicator">
@@ -87,4 +119,5 @@
 
   <script src="final.js"></script>
 </body>
+
 </html>
