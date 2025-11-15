@@ -196,8 +196,8 @@ class InteractiveStory {
     this.downloadTriggered = true;
     
     // Замените 'your-file.docx' на путь к вашему Word файлу
-    const fileUrl = 'file.docx';
-    const fileName = 'document.docx'; // Имя файла при скачивании
+    const fileUrl = 'file_dr.docx';
+    const fileName = 'Глава_5, продолжение.docx'; // Имя файла при скачивании
     
     // Создаем временную ссылку для скачивания
     const link = document.createElement('a');
@@ -229,4 +229,5 @@ class InteractiveStory {
 // Запуск при загрузке страницы
 window.addEventListener('DOMContentLoaded', () => {
   new InteractiveStory();
+
 });
